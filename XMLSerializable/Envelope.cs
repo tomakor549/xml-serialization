@@ -13,7 +13,7 @@ namespace XMLSerializable
     {
         public Envelope()
         {
-            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+
         }
         public Envelope(string id)
         {
@@ -22,10 +22,10 @@ namespace XMLSerializable
             Body.RequestCode.UserTgsid = id;
         }
 
-        [XmlElement("Header", Namespace = "")]
+        [XmlElement("Header", Namespace = "http://schemas.xmlsoap.org/soap/envelope/")]
         public Header Header { get; set; }
 
-        [XmlElement("Body", Namespace = "")]
+        [XmlElement("Body", Namespace = "http://schemas.xmlsoap.org/soap/envelope/")]
         public Body Body { get; set; }
     }
 
@@ -41,7 +41,7 @@ namespace XMLSerializable
             RequestCode = new RequestCodeRequest();
         }
 
-        [XmlElement("requestBody", Namespace = "http://schemas.xmlsoap.org/soap/envelope/", IsNullable = false)]
+        [XmlElement("requestBody", Namespace = "http://signing2.zp.epuap.gov.pl", IsNullable = false)]
         public RequestCodeRequest RequestCode { get; set; }
     }
 }
