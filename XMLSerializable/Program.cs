@@ -5,7 +5,9 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
+using XMLSerializable.Models.Faults;
 using XMLSerializable.Models.RequestCode;
 
 namespace XMLSerializable
@@ -26,64 +28,63 @@ namespace XMLSerializable
             StreamWriter myWriter = new StreamWriter("myFileName.xml");
             mySerializer.Serialize(myWriter, env, ns);
             myWriter.Close();
-         }
 
-        void WebCLient(Envelope request)
-        {
-            using (WebClient webClient = new WebClient())
+            XmlSerializer xmlSerializer = new XmlSerializer(env.GetType());
+
+            string requestString = null;
+
+            using (StringWriter textWriter = new StringWriter())
             {
-                //webClient.Proxy = new System.Net.WebProxy("http://localhost:8888");
-                webClient.Encoding = Encoding.UTF8;
-                if (!string.IsNullOrEmpty(request.SOAPAction))
-                {
-                    webClient.Headers.Add("SOAPAction", request.SOAPAction);
-                }
-                webClient.Headers[HttpRequestHeader.ContentType] = "text/xml";
+                xmlSerializer.Serialize(textWriter, env, ns);
+                requestString = textWriter.ToString();
+            }
+            Console.WriteLine(requestString);
+            
+                Fault fault = null;
 
-                string response = null;
-                try
+                // sending WS-Security request
+                using (WebClient webClient = new WebClient())
                 {
-                    // POST it
-                    response = webClient.UploadString(serviceUrl, requestString);
-                }
-                catch (WebException ex)
-                {
-                    if (ex.Response != null)
+                    //webClient.Proxy = new System.Net.WebProxy("http://localhost:8888");
+                    webClient.Encoding = Encoding.UTF8;
+                    if (!string.IsNullOrEmpty(env.Body.RequestCode.SOAPAction))
                     {
-                        var responseStream = ex.Response.GetResponseStream();
-                        if (responseStream != null)
+                        webClient.Headers.Add("SOAPAction", env.Body.RequestCode.SOAPAction);
+                    }
+                    webClient.Headers[HttpRequestHeader.ContentType] = "text/xml";
+
+                    string response = null;
+                    try
+                    {
+                        // POST it
+                        response = webClient.UploadString("https://5487.requestcatcher.com/send", requestString);
+                    }
+                    catch (WebException ex)
+                    {
+                        if (ex.Response != null)
                         {
-                            using (var reader = new StreamReader(responseStream))
+                            var responseStream = ex.Response.GetResponseStream();
+                            if (responseStream != null)
                             {
-                                var responseFault = reader.ReadToEnd();
-
-                                // log
-                                //new LoggerFactory().For(this).Debug(Event.SignedMessage, responseFault);
-
-                                fault = new FaultModelHandler().FromSOAP(responseFault);
-
-                                return null;
+                                using (var reader = new StreamReader(responseStream))
+                                {
+                                    
+                                }
                             }
                         }
+
                     }
 
-                    // fallback
-                    throw new ServiceException(string.Format("Client call failed for {0} at {1}", request.SOAPAction, serviceUrl), ex);
+                    if (!string.IsNullOrEmpty(response))
+                    {
+                    }
+                    else
+                    {
+                    }
                 }
+            
 
-                if (!string.IsNullOrEmpty(response))
-                {
-                    // log
-                    //new LoggerFactory().For(this).Debug(Event.SignedMessage, response);
-
-                    var responseHandler = new TResultResponseHandler();
-                    return responseHandler.FromSOAP(response, out fault);
-                }
-                else
-                {
-                    throw new ServiceException(string.Format("Got en empty response from {0} at {1}", request.SOAPAction, serviceUrl));
-                }
-            }
         }
+
     }
 }
