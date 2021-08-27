@@ -43,6 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="ServiceInterface\IServiceRequest.cs" />
+    <Compile Include="ServiceInterface\IServiceResponse.cs" />
+    <Compile Include="ServiceInterface\IServiceResponseHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
