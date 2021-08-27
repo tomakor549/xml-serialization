@@ -1,4 +1,5 @@
 ﻿using PZePUAP.Models.Errors;
+using XMLSerializable.Models.Faults;
 
 namespace PZePUAP.ServiceInterface
 {
@@ -8,6 +9,6 @@ namespace PZePUAP.ServiceInterface
     public interface IServiceResponseHandler<TResult>
         where TResult : class, IServiceResponse
     {
-        TResult FromSOAP(string soapResponse, out FaultModel fault);
+        TResult FromSOAP(string soapResponse, out Fault fault);
     }
 }

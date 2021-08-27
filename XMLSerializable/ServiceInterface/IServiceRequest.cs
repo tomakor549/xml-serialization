@@ -1,4 +1,4 @@
-﻿using PZePUAP.Headers;
+﻿using XMLSerializable.Models;
 
 namespace PZePUAP.ServiceInterface
 {
