@@ -39,50 +39,50 @@ namespace XMLSerializable
                 requestString = textWriter.ToString();
             }
             Console.WriteLine(requestString);
-            
-                Fault fault = null;
 
-                // sending WS-Security request
-                using (WebClient webClient = new WebClient())
+            Fault fault = null;
+
+            // sending WS-Security request
+            using (WebClient webClient = new WebClient())
+            {
+                //webClient.Proxy = new System.Net.WebProxy("http://localhost:8888");
+                webClient.Encoding = Encoding.UTF8;
+                if (!string.IsNullOrEmpty(env.Body.RequestCode.SOAPAction))
                 {
-                    //webClient.Proxy = new System.Net.WebProxy("http://localhost:8888");
-                    webClient.Encoding = Encoding.UTF8;
-                    if (!string.IsNullOrEmpty(env.Body.RequestCode.SOAPAction))
-                    {
-                        webClient.Headers.Add("SOAPAction", env.Body.RequestCode.SOAPAction);
-                    }
-                    webClient.Headers[HttpRequestHeader.ContentType] = "text/xml";
+                    webClient.Headers.Add("SOAPAction", env.Body.RequestCode.SOAPAction);
+                }
+                webClient.Headers[HttpRequestHeader.ContentType] = "text/xml";
 
-                    string response = null;
-                    try
+                string response = null;
+                try
+                {
+                    //wybierz gdzie wysłać
+                    response = webClient.UploadString("https://5487.requestcatcher.com/send", requestString);
+                }
+                catch (WebException ex)
+                {
+                    if (ex.Response != null)
                     {
-                        // POST it
-                        response = webClient.UploadString("https://5487.requestcatcher.com/send", requestString);
-                    }
-                    catch (WebException ex)
-                    {
-                        if (ex.Response != null)
+                        var responseStream = ex.Response.GetResponseStream();
+                        if (responseStream != null)
                         {
-                            var responseStream = ex.Response.GetResponseStream();
-                            if (responseStream != null)
+                            using (var reader = new StreamReader(responseStream))
                             {
-                                using (var reader = new StreamReader(responseStream))
-                                {
-                                    
-                                }
+
                             }
                         }
-
                     }
 
-                    if (!string.IsNullOrEmpty(response))
-                    {
-                    }
-                    else
-                    {
-                    }
                 }
-            
+
+                if (!string.IsNullOrEmpty(response))
+                {
+                }
+                else
+                {
+                }
+            }
+
 
         }
 
