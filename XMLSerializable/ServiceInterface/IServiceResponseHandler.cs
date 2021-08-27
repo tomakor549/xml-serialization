@@ -1,5 +1,4 @@
-﻿using PZePUAP.Models.Errors;
-using XMLSerializable.Models.Faults;
+﻿using XMLSerializable.Models.Faults;
 
 namespace PZePUAP.ServiceInterface
 {

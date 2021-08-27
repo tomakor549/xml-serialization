@@ -1,0 +1,7 @@
+C:\Users\venet\source\repos\XMLSerializable\XMLSerializable\bin\Debug\XMLSerializable.exe.config
+C:\Users\venet\source\repos\XMLSerializable\XMLSerializable\bin\Debug\XMLSerializable.exe
+C:\Users\venet\source\repos\XMLSerializable\XMLSerializable\bin\Debug\XMLSerializable.pdb
+C:\Users\venet\source\repos\XMLSerializable\XMLSerializable\obj\Debug\XMLSerializable.csproj.AssemblyReference.cache
+C:\Users\venet\source\repos\XMLSerializable\XMLSerializable\obj\Debug\XMLSerializable.csproj.CoreCompileInputs.cache
+C:\Users\venet\source\repos\XMLSerializable\XMLSerializable\obj\Debug\XMLSerializable.exe
+C:\Users\venet\source\repos\XMLSerializable\XMLSerializable\obj\Debug\XMLSerializable.pdb

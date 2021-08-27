@@ -42,9 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Envelope.cs" />
     <Compile Include="Models\Faults\Fault.cs" />
     <Compile Include="Models\Faults\FaultHandler.cs" />
-    <Compile Include="Models\RequestCode\RequestCodeReqest.cs" />
+    <Compile Include="Models\HeaderAttribute.cs" />
+    <Compile Include="Models\RequestCode\RequestCodeRequest.cs" />
+    <Compile Include="Models\RequestCode\RequestCodeResponse.cs" />
+    <Compile Include="Models\RequestCode\RequestCodeResponseHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ServiceInterface\IServiceRequest.cs" />
     <Compile Include="ServiceInterface\IServiceResponse.cs" />

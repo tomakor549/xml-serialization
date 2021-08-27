@@ -11,9 +11,14 @@ namespace XMLSerializable.Models.RequestCode
     /// <summary>
     /// RequestCode Request
     /// </summary>
-    [XmlRoot("requestCode", Namespace = Namespaces.TP2_SIGN)]
-    class RequestCodeReqest : IServiceRequest
+    [XmlRoot("requestCode", Namespace = "http://signing2.zp.epuap.gov.pl")]
+    public class RequestCodeRequest : IServiceRequest
     {
+        public RequestCodeRequest()
+        {
+
+        }
+
         [XmlElement(ElementName = "userTgsid", Namespace = "")]
         public string UserTgsid { get; set; }
 
